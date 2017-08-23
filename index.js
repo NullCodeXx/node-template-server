@@ -12,8 +12,8 @@
 
 const express = require('express');
 let app = express();
-app.listen(8080, function () {
-  console.log("L'application ecoute le port 8080.");
+app.listen(80, 'localhost' ,function () {
+  console.log("L'application ecoute le port 80.");
 });
 app.use("/", express.static('public'));
 
@@ -23,6 +23,7 @@ app.use(function(req, res) {
 });
 /*
     TERMINAL:
+    Lorsque le port écoute en dessous de 1024 on doit utiliser sudo pour excuter node index.js.
     Maintenant installer express : npm install express --save
     Test : node index.js
 */
