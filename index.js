@@ -8,33 +8,22 @@
  */
 
 'use strict';
-//doc  Servir des fichiers statiques dans Express: http://expressjs.com/fr/starter/static-files.html
 
-//REQUIRE
 const express = require('express');
 const mustache = require('mustache');
+const fs = require('fs');
 
 let app = express();
 
-//use est handlor c'est une function qui va etre appeler par une page web tout le temps.
-//Et qui seras dispo pour tout nos requete et method http.
-//les utilisateur auront acces a partir de la racince au dossier public.
+app.use("/", express.static('public'));
 
+app.get("/", function(req, resp) {
+    resp.render('index', {
+        name: 'Louis',
+        adjective: 'hungry'
+    });
+});
 
-/*
-    TERMINAL:
-    Lorsque le port écoute en dessous de 1024 on doit utiliser sudo pour excuter node index.js.
-    Maintenant installer express : npm install express --save
-    Test : node index.js
-    Nginx redirrige le trafic avec : proxy-pass localhost:8080 vers d'autre server type cady, node, php-fpm etc...
- */
-
- //INSTALLER LE TEMPLATE MOUSTACHE.
- 
- //doc : https://github.com/janl/mustache.js/
- //doc : https://mustache.github.io/
-
-//test mustache.
 app.get('/test', function(req, resp) {
      let str = mustache.render("Salut {{name}} !!! Ta mustache te va a merveille!",{
          name: "Djaafar"
@@ -42,23 +31,23 @@ app.get('/test', function(req, resp) {
      resp.send(str);
  });
 
- // enregitre le moteur de template, et expres va remplacer avec le template moustahe.
- // doc : http://expressjs.com/fr/4x/api.html#app.engine
-app.engine("html", function(path, option, callback) {
-    fs.readFile(path, function(err, mode) {
+app.engine("html", function(path, options, callback) {
+    fs.readFile(path, function(err, content) {
         if(err) {
-            console.log("fail to open template");
+            console.log("echec de l'ouverture du template");
             return callback(err);
         }
-        let str = mustache.render(content, option);
+        let str = mustache.render(content.toString(), options);
         return callback(null, str);
     })
-})
-//Remplace : app.use("/", express.static('public'));
+});
+
+//A préciser quand on utilse le template mustache, remplace ou équivalent : app.use(express.static("public"));
 app.set('views', './public');
 app.set('view engine', 'html');
 
+app.use(express.static("public"));
 
- app.listen(80, 'localhost' ,function () {
+app.listen(80, 'localhost' ,function () {
     console.log("L'application ecoute le port 80."); //le port 80 = localhost
-  });
+});
