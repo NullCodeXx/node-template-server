@@ -15,11 +15,14 @@ let app = express();
 app.listen(80, 'localhost' ,function () {
   console.log("L'application ecoute le port 80.");
 });
+//use est handlor c'est une function qui va etre appeler par une page web tout le temps.
+//Et qui seras dispo pour tout nos requete et method http.
+//les utilisateur auront acces a partir de la racince au dossier public.
 app.use("/", express.static('public'));
 
 app.use(function(req, res) { 
   res.status(404);
-  res.sendFile(__dirname + "/public/404.html"); //__dirname est remplacer par /home/solo/...mondossiercourant.
+  res.sendFile(__dirname + "/public/index.html"); //__dirname est remplacer par /home/solo/...mondossiercourant.
 });
 /*
     TERMINAL:
@@ -27,3 +30,7 @@ app.use(function(req, res) {
     Maintenant installer express : npm install express --save
     Test : node index.js
 */
+
+/**
+ * Nginx redirrige le trafic avec : proxy-pass localhost:8080 vers d'autre server type cady, node, php-fpm etc...
+ */
