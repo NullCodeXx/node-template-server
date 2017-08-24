@@ -15,21 +15,35 @@ const fs = require('fs');
 
 let app = express();
 
-app.use("/", express.static('public'));
+app.use(express.static('public'));
 
-app.get("/", function(req, resp) {
-    resp.render('index', {
-        name: 'Louis',
-        adjective: 'hungry'
-    });
-});
+//Ajout tableau.
+let db = [{name1: "Cyrille la veine", name2 : "Manu le cascadeur", name3 : "Yannis le grand frère"}];
 
-app.get('/test', function(req, resp) {
-     let str = mustache.render("Salut {{name}} !!! Ta mustache te va a merveille!",{
-         name: "Djaafar"
+app.get('/', function(req, resp) {
+     resp.render("index", {
+         //nameList: db,
+         //nameList2: DB,
+         name: "Djaafar",
+         age: 25,
+         test : db[0]
      })
-     resp.send(str);
  });
+
+let DB = [
+    {
+        name: "Bienvenus sur la place",
+        place : "Lyon 3"
+    },
+    {
+        name: "Apprendre le web",
+        place : "Lyon 8"
+    },
+    {
+        name: "Découverte A-Z du code obscure",
+        place : "Vénissieux"
+    },
+] 
 
 app.engine("html", function(path, options, callback) {
     fs.readFile(path, function(err, content) {
@@ -43,10 +57,8 @@ app.engine("html", function(path, options, callback) {
 });
 
 //A préciser quand on utilse le template mustache, remplace ou équivalent : app.use(express.static("public"));
-app.set('views', './public');
+app.set('views', './template');
 app.set('view engine', 'html');
-
-app.use(express.static("public"));
 
 app.listen(80, 'localhost' ,function () {
     console.log("L'application ecoute le port 80."); //le port 80 = localhost

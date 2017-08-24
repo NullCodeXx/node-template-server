@@ -7,6 +7,25 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- Tout le code HTML qui de modifer par le serveur -->
     <h1>Index.html dans le dossier template</h1>
+    <ul> 
+        {{#test}}
+            <li>
+            Test ->  Nom {{ name1 }} || Nom de la place : {{ name1 }}
+            </li>
+        {{/test}}
+    </ul>
+
+    <ul>
+    {{#nameList}} <!-- se répète entre le #nameLis.. et /nameList -->
+        <li>{{.}}</li> <!-- le . affiche le contenus qui correspond a l'élement actuel qu'il parcours -->
+    {{/nameList}}
+    </ul>
+    <ul>
+        {{#nameList2}} <!-- se répète entre le #nameLis.. et /nameList -->
+            <li>{{ name }} {{ place }}</li> <!-- le . affiche le contenus -->
+        {{/nameList2}}
+    </ul>
 </body>
 </html>
