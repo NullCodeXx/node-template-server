@@ -18,36 +18,35 @@ let app = express();
 app.use(express.static('public'));
 
 //Ajout tableau.
-let db = [{name1: "Cyrille la veine", name2 : "Manu le cascadeur", name3 : "Yannis le grand frère"}];
+let db = [{ name1: "Cyrille la veine", name2: "Manu le cascadeur", name3: "Yannis le grand frère" }];
 
 app.get('/', function(req, resp) {
-     resp.render("index", {
-         //nameList: db,
-         //nameList2: DB,
-         name: "Djaafar",
-         age: 25,
-         test : db[0]
-     })
- });
+    resp.render("index", {
+        //nameList: db,
+        //nameList2: DB,
+        name: "Djaafar",
+        age: 25,
+        test: db[0]
+    })
+});
 
-let DB = [
-    {
+let DB = [{
         name: "Bienvenus sur la place",
-        place : "Lyon 3"
+        place: "Lyon 3"
     },
     {
         name: "Apprendre le web",
-        place : "Lyon 8"
+        place: "Lyon 8"
     },
     {
         name: "Découverte A-Z du code obscure",
-        place : "Vénissieux"
+        place: "Vénissieux"
     },
-] 
+]
 
 app.engine("html", function(path, options, callback) {
     fs.readFile(path, function(err, content) {
-        if(err) {
+        if (err) {
             console.log("echec de l'ouverture du template");
             return callback(err);
         }
@@ -60,6 +59,7 @@ app.engine("html", function(path, options, callback) {
 app.set('views', './template');
 app.set('view engine', 'html');
 
-app.listen(80, 'localhost' ,function () {
-    console.log("L'application ecoute le port 80."); //le port 80 = localhost
+//Pour le server port spécifique : simplonlyon.fr/promo3/dboumaza/app
+app.listen(3024, 'localhost', function() {
+    console.log("L'application ecoute le port 3024."); //le port 3024 = localhost
 });
